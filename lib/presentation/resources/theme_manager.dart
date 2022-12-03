@@ -56,7 +56,6 @@ ThemeData getApplicationTheme() {
         caption: getRegularStyle(color: ColorManager.grey1),
         bodyText1: getRegularStyle(color: ColorManager.grey)),
 
-
     // input decoration theme (text form field)
     inputDecorationTheme: InputDecorationTheme(
         // content padding
