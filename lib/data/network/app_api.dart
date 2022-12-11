@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_clean_arch/app/constants.dart';
-import 'package:flutter_clean_arch/data/responses.dart';
+import 'package:flutter_clean_arch/data/response/responses.dart';
 import 'package:retrofit/http.dart';
 
 part 'app_api.g.dart';
