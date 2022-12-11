@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_clean_arch/domain/models.dart';
+import 'package:flutter_clean_arch/domain/model/models.dart';
 import 'package:flutter_clean_arch/presentation/onboarding/viewmodel/onbording_viewmodel.dart';
 import 'package:flutter_clean_arch/presentation/resources/color_manager.dart';
 import 'package:flutter_clean_arch/presentation/resources/values_manager.dart';
