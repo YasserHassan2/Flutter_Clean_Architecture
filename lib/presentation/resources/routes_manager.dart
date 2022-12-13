@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_arch/presentation/forgot_password/forgot_password_view.dart';
-import 'package:flutter_clean_arch/presentation/login/login_view.dart';
+import 'package:flutter_clean_arch/presentation/login/view/login_view.dart';
 import 'package:flutter_clean_arch/presentation/main/main_view.dart';
 import 'package:flutter_clean_arch/presentation/onboarding/view/onboarding_view.dart';
 import 'package:flutter_clean_arch/presentation/register/register_view.dart';

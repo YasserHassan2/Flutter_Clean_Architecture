@@ -13,13 +13,13 @@ class LoginUseCase implements BaseUseCase<LoginUseCaseInput, Authentication> {
 
   @override
   Future<Either<Failure, Authentication>> execute(input) async {
-    return await _repository.login(LoginRequest(input.email, input.password));
+    return await _repository.login(LoginRequest(input.userName, input.password));
   }
 }
 
 class LoginUseCaseInput {
-  String email;
+  String userName;
   String password;
 
-  LoginUseCaseInput(this.email, this.password);
+  LoginUseCaseInput(this.userName, this.password);
 }
