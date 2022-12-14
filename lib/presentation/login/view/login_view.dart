@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_clean_arch/presentation/login/viewmodel/login_loginViewModel.dart';
 
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -16,56 +15,34 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  LoginViewModel _loginViewModel = LoginViewModel(_loginUseCase);
-
-  final TextEditingController _userNameTextEditingController =
-      TextEditingController();
-  final TextEditingController _passwordTextEditingController =
-      TextEditingController();
-
+  final LoginViewModel _viewModel = LoginViewModel();
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _userPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  _bing() {
-    _loginViewModel.start();
-    _userNameTextEditingController.addListener(
-        () => _loginViewModel.setUserName(_userNameTextEditingController.text));
-    _passwordTextEditingController.addListener(
-        () => _loginViewModel.setPassword(_passwordTextEditingController.text));
+
+  _bind() {
+    _viewModel.start(); // tell viewmodel, start ur job
+    _userNameController
+        .addListener(() => _viewModel.setUserName(_userNameController.text));
+    _userPasswordController.addListener(
+            () => _viewModel.setPassword(_userPasswordController.text));
   }
 
   @override
   void initState() {
-    _bing();
+    _bind();
     super.initState();
   }
 
   @override
-  void dispose() {
-    _loginViewModel.dispose();
-    super.dispose();
-  }
-
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorManager.white,
-      body: StreamBuilder(
-        stream: _loginViewModel.outputState,
-        builder: (context, snapshot) {
-          // return snapshot.data?.getScreenWidget(context, _getContentWidget(),
-          //         () {
-          //       _loginViewModel.login();
-          //     }) ??
-          //     _getContentWidget();
-        },
-      ),
-    );
+    return _getContentWidget();
   }
 
   Widget _getContentWidget() {
-    return Container(
+    return Scaffold(
+      backgroundColor: ColorManager.white,
+      body: Container(
         padding: const EdgeInsets.only(top: AppPadding.p100),
         child: SingleChildScrollView(
           child: Form(
@@ -81,11 +58,11 @@ class _LoginViewState extends State<LoginView> {
                   padding: const EdgeInsets.only(
                       left: AppPadding.p28, right: AppPadding.p28),
                   child: StreamBuilder<bool>(
-                      stream: _loginViewModel.outIsUserNameValid,
+                      stream: _viewModel.outIsUserNameValid,
                       builder: (context, snapshot) {
                         return TextFormField(
                           keyboardType: TextInputType.emailAddress,
-                          controller: _userNameTextEditingController,
+                          controller: _userNameController,
                           decoration: InputDecoration(
                               hintText: AppStrings.username,
                               labelText: AppStrings.username,
@@ -102,11 +79,11 @@ class _LoginViewState extends State<LoginView> {
                   padding: const EdgeInsets.only(
                       left: AppPadding.p28, right: AppPadding.p28),
                   child: StreamBuilder<bool>(
-                      stream: _loginViewModel.outIsPasswordValid,
+                      stream: _viewModel.outIsPasswordValid,
                       builder: (context, snapshot) {
                         return TextFormField(
                           keyboardType: TextInputType.visiblePassword,
-                          controller: _passwordTextEditingController,
+                          controller: _userPasswordController,
                           decoration: InputDecoration(
                               hintText: AppStrings.password,
                               labelText: AppStrings.password,
@@ -123,7 +100,7 @@ class _LoginViewState extends State<LoginView> {
                   padding: const EdgeInsets.only(
                       left: AppPadding.p28, right: AppPadding.p28),
                   child: StreamBuilder<bool>(
-                      stream: _loginViewModel.outAreAllInputsValid,
+                      stream: _viewModel.outAreAllInputsValid,
                       builder: (context, snapshot) {
                         return SizedBox(
                           width: double.infinity,
@@ -131,7 +108,7 @@ class _LoginViewState extends State<LoginView> {
                           child: ElevatedButton(
                               onPressed: (snapshot.data ?? false)
                                   ? () {
-                                _loginViewModel.login();
+                                _viewModel.login();
                               }
                                   : null,
                               child: const Text(AppStrings.login)),
@@ -148,7 +125,7 @@ class _LoginViewState extends State<LoginView> {
                       children: [
                         TextButton(
                           onPressed: () {
-                            Navigator.pushNamed(
+                            Navigator.pushReplacementNamed(
                                 context, Routes.forgotPasswordRoute);
                           },
                           child: Text(AppStrings.forgetPassword,
@@ -156,7 +133,7 @@ class _LoginViewState extends State<LoginView> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.pushNamed(
+                            Navigator.pushReplacementNamed(
                                 context, Routes.registerRoute);
                           },
                           child: Text(AppStrings.registerText,
@@ -167,6 +144,15 @@ class _LoginViewState extends State<LoginView> {
               ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _viewModel.dispose();
+    super.dispose();
   }
 }
+
