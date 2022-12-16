@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/di.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/routes_manager.dart';
@@ -15,7 +16,8 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  final LoginViewModel _viewModel = LoginViewModel();
+  final LoginViewModel _viewModel = instance<LoginViewModel>();
+
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _userPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -25,7 +27,7 @@ class _LoginViewState extends State<LoginView> {
     _userNameController
         .addListener(() => _viewModel.setUserName(_userNameController.text));
     _userPasswordController.addListener(
-            () => _viewModel.setPassword(_userPasswordController.text));
+        () => _viewModel.setPassword(_userPasswordController.text));
   }
 
   @override
@@ -108,8 +110,8 @@ class _LoginViewState extends State<LoginView> {
                           child: ElevatedButton(
                               onPressed: (snapshot.data ?? false)
                                   ? () {
-                                _viewModel.login();
-                              }
+                                      _viewModel.login();
+                                    }
                                   : null,
                               child: const Text(AppStrings.login)),
                         );
@@ -155,4 +157,3 @@ class _LoginViewState extends State<LoginView> {
     super.dispose();
   }
 }
-
