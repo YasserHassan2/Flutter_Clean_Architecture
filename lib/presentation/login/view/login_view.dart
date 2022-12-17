@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/di.dart';
+import '../../common/state_renderer/state_renderer_impl.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/routes_manager.dart';
@@ -38,7 +39,19 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return _getContentWidget();
+    return Scaffold(
+      backgroundColor: ColorManager.white,
+      body: StreamBuilder<FlowState>(
+        stream: _viewModel.outputState,
+        builder: (context, snapShot) {
+          return snapShot.data?.getScreenWidget(context, _getContentWidget(),
+                  () {
+                _viewModel.login();
+              }) ??
+              _getContentWidget();
+        },
+      ),
+    );
   }
 
   Widget _getContentWidget() {

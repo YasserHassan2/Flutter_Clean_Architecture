@@ -4,16 +4,18 @@ import 'dart:math';
 import 'package:flutter_clean_arch/domain/usecase/login_usecase.dart';
 import 'package:flutter_clean_arch/presentation/base/baseviewmodel.dart';
 import 'package:flutter_clean_arch/presentation/common/freezed_data_classes.dart';
+import 'package:flutter_clean_arch/presentation/common/state_renderer/state_renderer.dart';
+import 'package:flutter_clean_arch/presentation/common/state_renderer/state_renderer_impl.dart';
 
 class LoginViewModel extends BaseViewModel
     with LoginViewModelInputs, LoginViewModelOutputs {
   final StreamController _userNameStreamController =
-  StreamController<String>.broadcast();
+      StreamController<String>.broadcast();
   final StreamController _passwordStreamController =
-  StreamController<String>.broadcast();
+      StreamController<String>.broadcast();
 
   final StreamController _areAllInputsValidStreamController =
-  StreamController<void>.broadcast();
+      StreamController<void>.broadcast();
 
   var loginObject = LoginObject("", "");
   final LoginUseCase _loginUseCase;
@@ -23,6 +25,7 @@ class LoginViewModel extends BaseViewModel
   // inputs
   @override
   void dispose() {
+    super.dispose();
     _userNameStreamController.close();
     _passwordStreamController.close();
     _areAllInputsValidStreamController.close();
@@ -30,7 +33,8 @@ class LoginViewModel extends BaseViewModel
 
   @override
   void start() {
-    // TODO: implement start
+    // view model should tell view please show content state
+    inputState.add(ContentState());
   }
 
   @override
@@ -58,16 +62,20 @@ class LoginViewModel extends BaseViewModel
 
   @override
   login() async {
+    inputState.add(
+        LoadingState(stateRendererType: StateRendererType.popupLoadingState));
     (await _loginUseCase.execute(
             LoginUseCaseInput(loginObject.userName, loginObject.password)))
         .fold(
             (failure) => {
                   // left -> failure
-                  print(failure.message)
+                  inputState.add(ErrorState(
+                      stateRendererType: StateRendererType.popupErrorState,
+                      message: failure.message))
                 },
             (data) => {
                   // right -> data (success)
-                  print(data.customer?.name)
+                  inputState.add(ContentState())
                 });
   }
 
