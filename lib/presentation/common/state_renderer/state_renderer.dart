@@ -19,7 +19,8 @@ enum StateRendererType {
   fullScreenErrorState,
   fullScreenEmptyState,
   // general
-  contentState, popupSuccess
+  contentState,
+  popupSuccess
 }
 
 class StateRenderer extends StatelessWidget {
@@ -30,9 +31,9 @@ class StateRenderer extends StatelessWidget {
 
   StateRenderer(
       {required this.stateRendererType,
-        this.message = AppStrings.loading,
-        this.title = "",
-        required this.retryActionFunction});
+      this.message = AppStrings.loading,
+      this.title = "",
+      required this.retryActionFunction});
 
   @override
   Widget build(BuildContext context) {
