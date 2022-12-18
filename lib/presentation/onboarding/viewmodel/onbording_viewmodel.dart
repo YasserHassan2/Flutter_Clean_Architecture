@@ -8,7 +8,8 @@ import 'package:flutter_clean_arch/presentation/resources/strings_manager.dart';
 class OnBoardingViewModel extends BaseViewModel
     with OnBoardingViewModelInputs, OnBoardingViewModelOutputs {
   //stream controllers outputs
-  final StreamController _streamController = StreamController<SliderViewObject>();
+  final StreamController _streamController =
+      StreamController<SliderViewObject>();
   late final List<SliderObject> _list;
   int _currentIndex = 0;
 
@@ -46,6 +47,7 @@ class OnBoardingViewModel extends BaseViewModel
     _currentIndex = index;
     _postDataToView();
   }
+
   @override
   Sink get inputSliderViewObject => _streamController.sink;
 
@@ -65,12 +67,10 @@ class OnBoardingViewModel extends BaseViewModel
             AppStrings.onBoardingSubTitle4, ImageAssets.onboardingLogo4),
       ];
 
-
   void _postDataToView() {
-    inputSliderViewObject.add(SliderViewObject(
-        _list[_currentIndex], _list.length, _currentIndex));
+    inputSliderViewObject.add(
+        SliderViewObject(_list[_currentIndex], _list.length, _currentIndex));
   }
-
 }
 
 //inputs means the "ORDERS" that will view model receives it from view.
