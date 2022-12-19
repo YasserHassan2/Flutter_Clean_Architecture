@@ -33,7 +33,7 @@ class ErrorState extends FlowState {
   StateRendererType stateRendererType;
   String message;
 
-  ErrorState({required this.stateRendererType, required this.message});
+  ErrorState({required this.stateRendererType, required this.message, });
 
   @override
   StateRendererType _getStateRendererType() => stateRendererType;

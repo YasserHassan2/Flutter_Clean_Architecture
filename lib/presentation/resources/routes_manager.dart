@@ -3,7 +3,7 @@ import 'package:flutter_clean_arch/presentation/forgot_password/view/forgot_pass
 import 'package:flutter_clean_arch/presentation/login/view/login_view.dart';
 import 'package:flutter_clean_arch/presentation/main/main_view.dart';
 import 'package:flutter_clean_arch/presentation/onboarding/view/onboarding_view.dart';
-import 'package:flutter_clean_arch/presentation/register/register_view.dart';
+import 'package:flutter_clean_arch/presentation/register/view/register_view.dart';
 import 'package:flutter_clean_arch/presentation/resources/strings_manager.dart';
 import 'package:flutter_clean_arch/presentation/splash/splash_view.dart';
 import 'package:flutter_clean_arch/presentation/store_details/store_details_view.dart';
