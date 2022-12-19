@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clean_arch/presentation/forgot_password/view/forgot_password_view.dart';
 import 'package:flutter_clean_arch/presentation/login/view/login_view.dart';
 import 'package:flutter_clean_arch/presentation/main/main_view.dart';
+import 'package:flutter_clean_arch/presentation/new_ui/login.dart';
 import 'package:flutter_clean_arch/presentation/onboarding/view/onboarding_view.dart';
 import 'package:flutter_clean_arch/presentation/register/view/register_view.dart';
 import 'package:flutter_clean_arch/presentation/resources/strings_manager.dart';
@@ -14,6 +15,7 @@ class Routes {
   static const String splashRoute = "/";
   static const String onBoardingRoute = "/onBoardingRoute";
   static const String loginRoute = "/login";
+  static const String loginNewDesignRoute = "/login_new_desing";
   static const String registerRoute = "/register";
   static const String forgotPasswordRoute = "/forgotPassword";
   static const String mainRoute = "/main";
@@ -29,6 +31,9 @@ class RouteGenerator {
       case Routes.loginRoute:
         initLoginModule();
         return MaterialPageRoute(builder: (_) => const LoginView());
+      case Routes.loginNewDesignRoute:
+        initLoginModule();
+        return MaterialPageRoute(builder: (_) => const LoginNewDesign());
       case Routes.onBoardingRoute:
         return MaterialPageRoute(builder: (_) => const OnBoardingView());
       case Routes.registerRoute:
