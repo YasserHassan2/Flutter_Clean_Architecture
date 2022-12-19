@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_clean_arch/presentation/forgot_password/forgot_password_view.dart';
+import 'package:flutter_clean_arch/presentation/forgot_password/view/forgot_password_view.dart';
 import 'package:flutter_clean_arch/presentation/login/view/login_view.dart';
 import 'package:flutter_clean_arch/presentation/main/main_view.dart';
 import 'package:flutter_clean_arch/presentation/onboarding/view/onboarding_view.dart';
@@ -35,7 +35,7 @@ class RouteGenerator {
         // initRegisterModule();
         return MaterialPageRoute(builder: (_) => const RegisterView());
       case Routes.forgotPasswordRoute:
-        // initForgotPasswordModule();
+        initForgotPasswordModule();
         return MaterialPageRoute(builder: (_) => const ForgotPasswordView());
       case Routes.mainRoute:
         return MaterialPageRoute(builder: (_) => const MainView());
