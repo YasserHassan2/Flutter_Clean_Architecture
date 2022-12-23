@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_clean_arch/app/app_prefs.dart';
+import 'package:flutter_clean_arch/domain/usecase/home_usecase.dart';
+import 'package:flutter_clean_arch/presentation/main/pages/home/viewmodel/home_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -76,5 +78,14 @@ initRegisterModule() {
     instance.registerFactory<RegisterViewModel>(
         () => RegisterViewModel(instance()));
     instance.registerFactory<ImagePicker>(() => ImagePicker());
+  }
+}
+
+initHomeModule() {
+  if (!GetIt.I.isRegistered<HomeUseCase>()) {
+    instance
+        .registerFactory<HomeUseCase>(() => HomeUseCase(instance()));
+    instance.registerFactory<HomeViewModel>(
+            () => HomeViewModel(instance()));
   }
 }
