@@ -3,6 +3,7 @@ import 'package:flutter_clean_arch/domain/model/models.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../data/network/failure.dart';
+import '../../data/response/responses.dart';
 
 abstract class Repository {
   Future<Either<Failure, Authentication>> login(LoginRequest loginRequest);
@@ -16,5 +17,5 @@ abstract class Repository {
 
   Future<Either<Failure, HomeObject>> getHomeData();
 
-  // Future<Either<Failure, StoreDetails>> getStoreDetails();
+  Future<Either<Failure, StoreDetails>> getStoreDetails();
 }

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_clean_arch/app/app_prefs.dart';
+import 'package:flutter_clean_arch/data/data_source/local_data_source.dart';
 import 'package:flutter_clean_arch/domain/usecase/home_usecase.dart';
 import 'package:flutter_clean_arch/presentation/main/pages/home/viewmodel/home_viewmodel.dart';
 import 'package:get_it/get_it.dart';
@@ -16,9 +17,11 @@ import '../domain/repository/repository.dart';
 import '../domain/usecase/forgot_password_usecase.dart';
 import '../domain/usecase/login_usecase.dart';
 import '../domain/usecase/register_use_case.dart';
+import '../domain/usecase/store_details_usecase.dart';
 import '../presentation/forgot_password/viewmodel/forgot_password_viewmodel.dart';
 import '../presentation/login/viewmodel/login_viewmodel.dart';
 import '../presentation/register/viewmodel/register_viewmodel.dart';
+import '../presentation/store_details/viewmodel/store_details_viewmodel.dart';
 
 final instance = GetIt.instance;
 
@@ -48,11 +51,13 @@ Future<void> initAppModule() async {
   // remote data source
   instance.registerLazySingleton<RemoteDataSource>(
       () => RemoteDataSourceImpl(instance<AppServiceClient>()));
+  // local data source
+  instance.registerLazySingleton<LocalDataSource>(() => LocalDataSourceImpl());
 
   // repository
 
   instance.registerLazySingleton<Repository>(
-      () => RepositoryImpl(instance(), instance()));
+      () => RepositoryImpl(instance(), instance(), instance()));
 }
 
 initLoginModule() {
@@ -83,9 +88,16 @@ initRegisterModule() {
 
 initHomeModule() {
   if (!GetIt.I.isRegistered<HomeUseCase>()) {
-    instance
-        .registerFactory<HomeUseCase>(() => HomeUseCase(instance()));
-    instance.registerFactory<HomeViewModel>(
-            () => HomeViewModel(instance()));
+    instance.registerFactory<HomeUseCase>(() => HomeUseCase(instance()));
+    instance.registerFactory<HomeViewModel>(() => HomeViewModel(instance()));
+  }
+}
+
+initStoreDetailsModule() {
+  if (!GetIt.I.isRegistered<StoreDetailsUseCase>()) {
+    instance.registerFactory<StoreDetailsUseCase>(
+        () => StoreDetailsUseCase(instance()));
+    instance.registerFactory<StoreDetailsViewModel>(
+        () => StoreDetailsViewModel(instance()));
   }
 }
