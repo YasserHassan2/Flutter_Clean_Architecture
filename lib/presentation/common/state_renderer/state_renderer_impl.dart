@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_arch/app/constants.dart';
@@ -6,12 +7,11 @@ import 'package:flutter_clean_arch/presentation/common/state_renderer/state_rend
 import '../../resources/strings_manager.dart';
 
 abstract class FlowState {
-  StateRendererType _getStateRendererType();
+  StateRendererType getStateRendererType();
 
   String getMessage();
 }
-
-//Loading state (POPUP,FULL SCREEN)
+// loading state (POPUP,FULL SCREEN)
 
 class LoadingState extends FlowState {
   StateRendererType stateRendererType;
@@ -21,52 +21,51 @@ class LoadingState extends FlowState {
       {required this.stateRendererType, String message = AppStrings.loading});
 
   @override
-  StateRendererType _getStateRendererType() => stateRendererType;
+  String getMessage() => message ?? AppStrings.loading.tr();
 
   @override
-  String getMessage() => message ?? AppStrings.loading;
+  StateRendererType getStateRendererType() => stateRendererType;
 }
 
-//Error state (POPUP,FULL SCREEN)
-
+// error state (POPUP,FULL SCREEN)
 class ErrorState extends FlowState {
   StateRendererType stateRendererType;
   String message;
 
-  ErrorState({required this.stateRendererType, required this.message, });
+  ErrorState({required this.stateRendererType, required this.message});
 
   @override
-  StateRendererType _getStateRendererType() => stateRendererType;
+  String getMessage() => message;
 
   @override
-  String getMessage() => message ?? AppStrings.loading;
+  StateRendererType getStateRendererType() => stateRendererType;
 }
 
-//Content state
+// content state
 
 class ContentState extends FlowState {
   ContentState();
 
   @override
-  StateRendererType _getStateRendererType() => StateRendererType.contentState;
+  String getMessage() => Constants.empty;
 
   @override
-  String getMessage() => Constants.empty;
+  StateRendererType getStateRendererType() => StateRendererType.contentState;
 }
 
-//Empty state (POPUP,FULL SCREEN)
+// EMPTY STATE
 
 class EmptyState extends FlowState {
   String message;
 
-  EmptyState({required this.message});
-
-  @override
-  StateRendererType _getStateRendererType() =>
-      StateRendererType.fullScreenEmptyState;
+  EmptyState(this.message);
 
   @override
   String getMessage() => message;
+
+  @override
+  StateRendererType getStateRendererType() =>
+      StateRendererType.fullScreenEmptyState;
 }
 
 // success state
@@ -79,48 +78,48 @@ class SuccessState extends FlowState {
   String getMessage() => message;
 
   @override
-  StateRendererType _getStateRendererType() => StateRendererType.popupSuccess;
+  StateRendererType getStateRendererType() => StateRendererType.popupSuccess;
 }
 
-extension FlowStateExtention on FlowState {
+extension FlowStateExtension on FlowState {
   Widget getScreenWidget(BuildContext context, Widget contentScreenWidget,
       Function retryActionFunction) {
     switch (runtimeType) {
       case LoadingState:
         {
-          if (_getStateRendererType() == StateRendererType.popupLoadingState) {
+          if (getStateRendererType() == StateRendererType.popupLoadingState) {
             // show popup loading
-            showPopup(context, _getStateRendererType(), getMessage());
+            showPopup(context, getStateRendererType(), getMessage());
             // show content ui of the screen
             return contentScreenWidget;
           } else {
             // full screen loading state
             return StateRenderer(
                 message: getMessage(),
-                stateRendererType: _getStateRendererType(),
+                stateRendererType: getStateRendererType(),
                 retryActionFunction: retryActionFunction);
           }
         }
       case ErrorState:
         {
           dismissDialog(context);
-          if (_getStateRendererType() == StateRendererType.popupErrorState) {
+          if (getStateRendererType() == StateRendererType.popupErrorState) {
             // show popup error
-            showPopup(context, _getStateRendererType(), getMessage());
+            showPopup(context, getStateRendererType(), getMessage());
             // show content ui of the screen
             return contentScreenWidget;
           } else {
             // full screen error state
             return StateRenderer(
                 message: getMessage(),
-                stateRendererType: _getStateRendererType(),
+                stateRendererType: getStateRendererType(),
                 retryActionFunction: retryActionFunction);
           }
         }
       case EmptyState:
         {
           return StateRenderer(
-              stateRendererType: _getStateRendererType(),
+              stateRendererType: getStateRendererType(),
               message: getMessage(),
               retryActionFunction: () {});
         }
@@ -147,25 +146,25 @@ extension FlowStateExtention on FlowState {
         }
     }
   }
-}
 
-_isCurrentDialogShowing(BuildContext context) =>
-    ModalRoute.of(context)?.isCurrent != true;
+  _isCurrentDialogShowing(BuildContext context) =>
+      ModalRoute.of(context)?.isCurrent != true;
 
-dismissDialog(BuildContext context) {
-  if (_isCurrentDialogShowing(context)) {
-    Navigator.of(context, rootNavigator: true).pop(true);
+  dismissDialog(BuildContext context) {
+    if (_isCurrentDialogShowing(context)) {
+      Navigator.of(context, rootNavigator: true).pop(true);
+    }
   }
-}
 
-showPopup(
-    BuildContext context, StateRendererType stateRendererType, String message,
-    {String title = Constants.empty}) {
-  WidgetsBinding.instance.addPostFrameCallback((_) => showDialog(
-      context: context,
-      builder: (BuildContext context) => StateRenderer(
-          stateRendererType: stateRendererType,
-          message: message,
-          title: title,
-          retryActionFunction: () {})));
+  showPopup(
+      BuildContext context, StateRendererType stateRendererType, String message,
+      {String title = Constants.empty}) {
+    WidgetsBinding.instance?.addPostFrameCallback((_) => showDialog(
+        context: context,
+        builder: (BuildContext context) => StateRenderer(
+            stateRendererType: stateRendererType,
+            message: message,
+            title: title,
+            retryActionFunction: () {})));
+  }
 }

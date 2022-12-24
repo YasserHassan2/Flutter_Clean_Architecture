@@ -24,6 +24,7 @@ class _SettingsPageState extends State<SettingsPage> {
   final AppPreferences _appPreferences = instance<AppPreferences>();
   final LocalDataSource _localDataSource = instance<LocalDataSource>();
 
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -32,7 +33,7 @@ class _SettingsPageState extends State<SettingsPage> {
         children: [
           ListTile(
             leading: SvgPicture.asset(ImageAssets.changeLangIc),
-            title: Text(AppStrings.changeLanguage,
+            title: Text(AppStrings.changeLanguage.tr(),
                 style: Theme.of(context).textTheme.bodyLarge),
             trailing: Transform(
               alignment: Alignment.center,
@@ -45,7 +46,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           ListTile(
             leading: SvgPicture.asset(ImageAssets.contactUsIc),
-            title: Text(AppStrings.contactUs,
+            title: Text(AppStrings.contactUs.tr(),
                 style: Theme.of(context).textTheme.bodyLarge),
             trailing: Transform(
               alignment: Alignment.center,
@@ -58,7 +59,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           ListTile(
             leading: SvgPicture.asset(ImageAssets.inviteFriendsIc),
-            title: Text(AppStrings.inviteYourFriends,
+            title: Text(AppStrings.inviteYourFriends.tr(),
                 style: Theme.of(context).textTheme.bodyLarge),
             trailing: Transform(
               alignment: Alignment.center,
@@ -88,8 +89,8 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   bool isRtl() {
-    return true;
-    // return context.locale == ARABIC_LOCAL;
+    // return true;
+    return context.locale == ARABIC_LOCAL;
   }
 
   _changeLanguage() {

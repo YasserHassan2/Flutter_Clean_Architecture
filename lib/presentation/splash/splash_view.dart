@@ -33,7 +33,7 @@ class _SplashViewState extends State<SplashView> {
               .then((isOnBoardingViewed) {
               isOnBoardingViewed
                   ? Navigator.pushReplacementNamed(
-                      context, Routes.loginNewDesignRoute)
+                      context, Routes.loginRoute)
                   : Navigator.pushReplacementNamed(
                       context, Routes.onBoardingRoute);
             });
