@@ -19,7 +19,7 @@ class _MainViewState extends State<MainView> {
     HomePage(),
     SearchPage(),
     NotificationPage(),
-    SettingPage()
+    SettingsPage()
   ];
   List<String> titles = [
     AppStrings.home,
