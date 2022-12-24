@@ -37,7 +37,7 @@ extension ForgotPasswordResponseMapper on ForgotPasswordResponse? {
 extension ServiceResponseMapper on ServiceResponse? {
   Service toDomain() {
     return Service(
-        this?.id.orEmpty() ?? Constants.empty,
+        this?.id.orZero() ?? Constants.zero,
         this?.title.orEmpty() ?? Constants.empty,
         this?.image.orEmpty() ?? Constants.empty);
   }
@@ -46,7 +46,7 @@ extension ServiceResponseMapper on ServiceResponse? {
 extension StoreResponseMapper on StoreResponse? {
   Store toDomain() {
     return Store(
-        this?.id.orEmpty() ?? Constants.empty,
+        this?.id.orZero() ?? Constants.zero,
         this?.title.orEmpty() ?? Constants.empty,
         this?.image.orEmpty() ?? Constants.empty);
   }
@@ -55,7 +55,7 @@ extension StoreResponseMapper on StoreResponse? {
 extension BannersResponseMapper on BannersResponse? {
   BannerAd toDomain() {
     return BannerAd(
-        this?.id.orEmpty() ?? Constants.empty,
+        this?.id.orZero() ?? Constants.zero,
         this?.title.orEmpty() ?? Constants.empty,
         this?.image.orEmpty() ?? Constants.empty,
         this?.link.orEmpty() ?? Constants.empty);
